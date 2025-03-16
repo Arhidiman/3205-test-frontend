@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { UrlConstructorForm } from './components/AppHeader/UrlConstructorForm'
 import { AppTitle } from './components/AppTitle/AppTitle'
+import { UrlConstructorForm } from './components/AppHeader/UrlConstructorForm'
+import { UrlsList } from './components/UrlsList/UrlsList'
 import './App.css'
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
         <div className='app-container'>
             <AppTitle/>
             <UrlConstructorForm/>
+            <UrlsList/>
         </div>
     )
 }
