@@ -1,32 +1,35 @@
+import { useState } from "react"
 import { Collapse, Table } from "antd"
+import { useFetchUrlStatistics } from "../../hooks/useFetchUrlStatistics"
 import type { TableProps } from "antd"
-import type { IUrlDto } from "../../ApiClient/dto"
+import type { IUrlDto, IUrlStatisticsDto } from "../../ApiClient/dto"
 
-export const UrlStatistics = (urlItem: IUrlDto, i: number) => {
+export const UrlStatistics: React.FC<{urlItem: IUrlDto}> = ({urlItem}) => {
 
+    const [urlStats, setStats] = useState()
 
-    
-    const columns: TableProps<IUrlDto>['columns'] = [
+    const columns: TableProps<IUrlStatisticsDto>['columns'] = [
         {
             title: 'IP',
-            dataIndex: 'full_price',
-            key: 'full_price',
+            dataIndex: 'ip',
+            key: 'ip',
         },
         {
             title: 'Время перехода по ссылке',
-            dataIndex: 'created_at',
-            key: 'created_at',
+            dataIndex: 'createdAt',
+            key: 'createdAt',
         }
     ]
     
+    const { statistics } = useFetchUrlStatistics(urlItem.shortUrl)
+
+    console.log(statistics, 'STATISTICS !!!!!')
 
     return (
-        <Collapse.Panel header={urlItem.alias} key={i}>
-            <Table 
-                dataSource={[]}  
-                columns={[]}
-            >
-           </Table>
-        </Collapse.Panel>
+        <Table 
+            dataSource={statistics}  
+            columns={columns}
+        >
+        </Table>
     )
 }
