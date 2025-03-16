@@ -1,5 +1,9 @@
 import { Collapse } from "antd";
+import { useFetchUrls } from "../../hooks/useFetchUrls";
+import { UrlStatistics } from "./UrlStatistics";
 import type { CollapseProps } from "antd";
+import type { IUrlDto } from "../../ApiClient/dto";
+
 
 export const UrlsList: React.FC = () => {
     const items: CollapseProps['items'] = [
@@ -20,13 +24,14 @@ export const UrlsList: React.FC = () => {
         },
       ];
       
+    const { urls } = useFetchUrls()
+
+    console.log(urls)
+
   
     return (
-        
-        items.length 
-        ? <Collapse items={items} defaultActiveKey={['1']} onChange={(e) => console.log(e)} />
+        urls && urls.length 
+        ? <Collapse>{urls.map(UrlStatistics)}</Collapse>
         : <p>На данный момент ни одной ссылки не создано</p>
     )
-      
-
 }
