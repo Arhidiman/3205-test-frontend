@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { UrlInput } from './components/AppHeader/AppHeader'
+import { UrlConstructorForm } from './components/AppHeader/UrlConstructorForm'
+import { AppTitle } from './components/AppTitle/AppTitle'
 import './App.css'
 
 function App() {
@@ -8,8 +9,8 @@ function App() {
 
     return (
         <div className='app-container'>
-            <h1>Сервис сокращения URL</h1>
-            <UrlInput/>
+            <AppTitle/>
+            <UrlConstructorForm/>
         </div>
     )
 }
