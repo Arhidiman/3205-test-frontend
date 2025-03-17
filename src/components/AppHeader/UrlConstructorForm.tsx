@@ -14,8 +14,6 @@ interface IUrlConstructorForm {
 export const UrlConstructorForm: React.FC<IUrlConstructorForm> = ({ setUrls }) =>  {
 
     const [form] = useForm()
-
-
     const { urls, refetch } = useFetchUrls()
 
     useEffect(() => {
@@ -27,8 +25,6 @@ export const UrlConstructorForm: React.FC<IUrlConstructorForm> = ({ setUrls }) =
         await shortenUrl(values)
         refetch()
     }
-
-   
 
     const originalUrlRules = [{ required: true, message: 'Введите ссылку'}]
     const aliasRules = [{ max: 20, message: 'Количество символов не должно быть больше 20'}]

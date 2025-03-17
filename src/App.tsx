@@ -11,15 +11,13 @@ function App() {
     const [urls, setUrls] = useState<IUrlDto[] | []>([])
 
     return (
-
       <ConfigProvider>
         <div className='app-container'>
             <AppTitle/>
             <UrlConstructorForm setUrls={setUrls}/>
-            <UrlsList urls={urls}/>
+            <UrlsList urls={urls} setUrls={setUrls}/>
         </div>
       </ConfigProvider>
-        
     )
 }
 

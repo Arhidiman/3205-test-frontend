@@ -1,18 +1,11 @@
 import {
-    PlusOutlined, 
-    MinusOutlined, 
-    EditOutlined, 
-    CheckOutlined, 
+    PlusOutlined,
     DeleteOutlined, 
-    ArrowDownOutlined,
-    ArrowLeftOutlined,
-    MoneyCollectFilled
 } from "@ant-design/icons"
 import {Button} from "antd"
 import type {MouseEventHandler} from "react";
-// import './ActionButton.scss'
 
-export type TActions = 'add' | 'reduce' | 'edit' | 'check' | 'delete' | 'complete' | 'down' | 'left' | 'pay'
+export type TActions = 'add' | 'delete'
 
 export interface IActionButton {
     className?: string
@@ -29,20 +22,19 @@ export const ActionButton = ({className, text, actionHandler, type, disabled, si
     const getActionIcon = (type: TActions | undefined) => {
         switch (type) {
             case 'add': return <PlusOutlined/>
-            case 'reduce': return <MinusOutlined/>
-            case 'edit': return <EditOutlined/>
-            case 'check': return <CheckOutlined/>
             case 'delete': return <DeleteOutlined/>
-            case 'down': return <ArrowDownOutlined/>
-            case 'left': return <ArrowLeftOutlined/>
-            case 'pay': return <MoneyCollectFilled/>
         }
+    }
+
+    const handleClick: React.MouseEventHandler<HTMLElement> = (e) => {
+        e.stopPropagation()
+        actionHandler?.(e)
     }
 
     return (
         <Button
-            className={`action-button ${className && className}`}
-            onClick={actionHandler}
+            className={`action-button ${className || ''}`}
+            onClick={handleClick}
             disabled={disabled}
             size={size}
             ghost={ghost}
