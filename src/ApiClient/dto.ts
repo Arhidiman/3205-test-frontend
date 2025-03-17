@@ -13,3 +13,9 @@ export interface IUrlStatisticsDto {
     ip: string;
     createdAt: string;
 }
+
+export interface IShortenUrl {
+    originalUrl: string,
+    expiresAt?: string,
+    alias?: string
+}

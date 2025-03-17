@@ -46,6 +46,7 @@ export const ActionButton = ({className, text, actionHandler, type, disabled, si
             disabled={disabled}
             size={size}
             ghost={ghost}
+            type="primary"
         >
             {text}
             {getActionIcon(type)}

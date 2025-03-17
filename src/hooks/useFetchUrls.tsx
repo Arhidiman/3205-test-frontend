@@ -6,6 +6,8 @@ interface IFetchUrls {
     urls: IUrlDto[],
     loading: boolean,
     error: string | null,
+    refetch: () => void
+
 }
 
 export const useFetchUrls = (): IFetchUrls => {
@@ -14,22 +16,21 @@ export const useFetchUrls = (): IFetchUrls => {
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
 
+    const useFetchUrls = async () => {
+        try {
+            const data = await getAllUrls()
+            setUrls(data)
+        } catch(err: any) {
+            setError(err?.message || 'Не удалось загрузить ссылки') 
+        } finally {
+            setLoading(false)
+        }
+    }   
+
     useEffect(() => {
-
-        const useFetchUrls = async () => {
-            try {
-                const data = await getAllUrls()
-                setUrls(data)
-            } catch(err: any) {
-                setError(err?.message || 'Не удалось загрузить ссылки') 
-            } finally {
-                setLoading(false)
-            }
-        }      
-
         useFetchUrls()
-    }, [])
+    }, [JSON.stringify(urls)])
 
-    return { urls, loading, error}
+    return { urls, loading, error, refetch: useFetchUrls}
 
 }

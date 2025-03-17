@@ -14,19 +14,18 @@ export const useFetchUrlStatistics = (shortUrl: string): IFetchUrls => {
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
 
+    const useFetchStatistics = async () => {
+        try {
+            const data = await getUrlStatistics(shortUrl)
+            setStatistics(data)
+        } catch(err: any) {
+            setError(err?.message || 'Не удалось загрузить ссылки') 
+        } finally {
+            setLoading(false)
+        }
+    }      
+
     useEffect(() => {
-
-        const useFetchStatistics = async () => {
-            try {
-                const data = await getUrlStatistics(shortUrl)
-                setStatistics(data)
-            } catch(err: any) {
-                setError(err?.message || 'Не удалось загрузить ссылки') 
-            } finally {
-                setLoading(false)
-            }
-        }      
-
         useFetchStatistics()
     }, [])
 
