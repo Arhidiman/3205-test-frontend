@@ -6,6 +6,7 @@ interface IFetchUrls {
     statistics: IUrlStatisticsDto[],
     loading: boolean,
     error: string | null,
+    refetch: () => Promise<void>
 }
 
 export const useFetchUrlStatistics = (shortUrl: string): IFetchUrls => {
@@ -29,6 +30,6 @@ export const useFetchUrlStatistics = (shortUrl: string): IFetchUrls => {
         useFetchStatistics()
     }, [])
 
-    return { statistics, loading, error}
+    return { statistics, loading, error, refetch: useFetchStatistics}
 
 }

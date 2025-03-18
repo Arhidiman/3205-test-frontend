@@ -14,6 +14,7 @@ interface IUrlsList {
 export const UrlsList: React.FC<IUrlsList> = ({ urls, setUrls }) => {
     
     const [activeKey, setActiveKey] = useState<string | string[]>([])
+    const [selectedUrl, setSelectedUrl] = useState<string | null>(null)
 
     const handleCollapseChange = (key: string | string[]) => {
         setActiveKey(key)
@@ -27,8 +28,10 @@ export const UrlsList: React.FC<IUrlsList> = ({ urls, setUrls }) => {
     const redirect: MouseEventHandler<HTMLAnchorElement> = async (e) => {
         e.stopPropagation()
         e.preventDefault()
-        const originalUrl = await redirectToOriginal(e.currentTarget.textContent || '')
-        window.open(originalUrl, '_blank');
+        const shortUrl = e.currentTarget.textContent || ''
+        const originalUrl = await redirectToOriginal(shortUrl)
+        window.open(originalUrl, '_blank')
+        setSelectedUrl(shortUrl)
     }
 
     const urlCollapsePanel = (urlItem: IUrlDto) => (
@@ -36,7 +39,7 @@ export const UrlsList: React.FC<IUrlsList> = ({ urls, setUrls }) => {
             header={<a href={urlItem.shortUrl} onClick={redirect} >{urlItem.shortUrl}</a>} 
             key={urlItem.shortUrl} 
             extra={<ActionButton text="Удалить ссылку" type="delete" actionHandler={() => deleteLink(urlItem.shortUrl)}/>}>
-            <UrlStatistics urlItem={urlItem} />
+            <UrlStatistics urlItem={urlItem} selectedUrl={selectedUrl}/>
         </Collapse.Panel>    
     )
 
