@@ -20,7 +20,7 @@ export const useFetchUrlStatistics = (shortUrl: string): IFetchUrls => {
             const data = await getUrlStatistics(shortUrl)
             setStatistics(data)
         } catch(err: any) {
-            setError(err?.message || 'Не удалось загрузить ссылки') 
+            setError(err?.message || 'Не удалось загрузить статистику') 
         } finally {
             setLoading(false)
         }
@@ -28,8 +28,8 @@ export const useFetchUrlStatistics = (shortUrl: string): IFetchUrls => {
 
     useEffect(() => {
         useFetchStatistics()
-    }, [])
+    }, [JSON.stringify(statistics)])
 
-    return { statistics, loading, error, refetch: useFetchStatistics}
+    return { statistics, loading, error, refetch: useFetchStatistics }
 
 }
