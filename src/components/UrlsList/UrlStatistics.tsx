@@ -49,6 +49,7 @@ export const UrlStatistics: React.FC<{urlItem: IUrlDto, selectedUrl: string | nu
             <Table 
                 dataSource={statistics.slice(0, 5)}  
                 columns={columns}
+                rowKey="ip"
             >
             </Table>
         </>
