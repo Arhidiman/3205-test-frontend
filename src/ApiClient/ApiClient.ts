@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { notification } from 'antd';
-import type { IUrlDto, IUrlStatisticsDto, IShortenUrl } from './dto';
+import type { IShortenUrl } from './dto';
 
 const API_BASE_URL = 'http://localhost:5000'
 
