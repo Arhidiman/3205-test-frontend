@@ -19,30 +19,30 @@ export const UrlsList: React.FC<IUrlsList> = ({ urls, setUrls }) => {
         setActiveKey(key)
     }
 
-    const stopPropagation: MouseEventHandler = (e) => e.stopPropagation()
-
     const deleteLink = async (shortUrl: string) => {
         await deleteUrl(shortUrl)
         setUrls(urls.filter(url => url.shortUrl !== shortUrl))
     }
 
-    const redirect = async (shortUrl: string) => {
-        const originalUrl = await redirectToOriginal(shortUrl)
+    const redirect: MouseEventHandler<HTMLAnchorElement> = async (e) => {
+        e.stopPropagation()
+        e.preventDefault()
+        const originalUrl = await redirectToOriginal(e.currentTarget.textContent || '')
         window.open(originalUrl, '_blank');
     }
 
+    const urlCollapsePanel = (urlItem: IUrlDto) => (
+        <Collapse.Panel 
+            header={<a href={urlItem.shortUrl} onClick={redirect} >{urlItem.shortUrl}</a>} 
+            key={urlItem.shortUrl} 
+            extra={<ActionButton text="Удалить ссылку" type="delete" actionHandler={() => deleteLink(urlItem.shortUrl)}/>}>
+            <UrlStatistics urlItem={urlItem} />
+        </Collapse.Panel>    
+    )
+
     return urls && urls.length ? (
         <Collapse activeKey={activeKey} onChange={handleCollapseChange}>
-            {
-            urls.map((urlItem) => 
-                <Collapse.Panel 
-                    header={<a onClick={() => redirect(urlItem.shortUrl)} >{urlItem.shortUrl}</a>} 
-                    key={urlItem.shortUrl} 
-                    extra={<ActionButton text="Удалить ссылку" type="delete" actionHandler={() => deleteLink(urlItem.shortUrl)}/>}>
-                    <UrlStatistics urlItem={urlItem} />
-                </Collapse.Panel>            
-                )
-            }
+            {urls.map(urlCollapsePanel )}
         </Collapse>
     ) : (
         <p>На данный момент ни одной ссылки не создано</p>
