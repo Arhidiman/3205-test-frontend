@@ -47,7 +47,7 @@ export const UrlStatistics: React.FC<{urlItem: IUrlDto, selectedUrl: string | nu
         <>
             {statistics && statistics.length > 0 && <p>Всего переходов: {statistics.length}</p>}
             <Table 
-                dataSource={statistics}  
+                dataSource={statistics.slice(0, 5)}  
                 columns={columns}
             >
             </Table>
